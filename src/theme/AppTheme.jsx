@@ -36,7 +36,9 @@ export default function AppTheme() {
     },
     components: {
       ...(mode === 'light'
-        ? {MuiCard: {
+        ? 
+        {
+          MuiCard: {
             styleOverrides: {
               root: {
                 backgroundColor: "#f5f5f5",
@@ -44,12 +46,22 @@ export default function AppTheme() {
             },
           }
         }
-        : {MuiCard: {
-          styleOverrides: {
-            root: {
-              backgroundColor: "#121212",
+        : 
+        {
+          MuiCard: {
+            styleOverrides: {
+              root: {
+                backgroundColor: "#353535",
+              },
             },
           },
+          MuiInputBase: {
+            styleOverrides: {
+              root: {
+                backgroundColor: "#f5f5f5",
+                color: "#121212"
+              },
+            },
           }
         })
     }
