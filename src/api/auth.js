@@ -6,7 +6,10 @@ const login = async ({ user, password }) => {
       user,
       password,
     });
-    localStorage.setItem("token", data.token);
+    if (data) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("USER_INFO", data);
+    }
     return data;
   } catch (err) {
     const res = err.response.data;

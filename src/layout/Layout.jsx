@@ -6,7 +6,6 @@ import Sidebar from "./components/Sidebar";
 
 const Layout = () => {
   const [asideActive, setAsideActive] = useState(false);
-
   return (
     <Grid container>
       <Grid item xs={12}>

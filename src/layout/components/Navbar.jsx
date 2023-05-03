@@ -17,15 +17,15 @@ import { Button } from "@mui/material";
 import { East } from "@mui/icons-material";
 
 const NavBar = ({ setAsideActive, asideActive }) => {
-  const storageData = localStorage.getItem("QUERCU_USER_INFO");
+  const storageData = localStorage.getItem("USER_INFO");
   const user = JSON.parse(storageData);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
 
   const myMenu = [
-    { label: "Perfil", link: routes.dashboard },
-    { label: "Cerrar sesión" },
+    { label: "Profile", link: routes.dashboard },
+    { label: "Logout" },
   ];
 
   const isMenuOpen = Boolean(anchorEl);
@@ -137,26 +137,27 @@ const NavBar = ({ setAsideActive, asideActive }) => {
   return (
     <Box sx={{ flexGrow: 1, height: "100%" }}>
       <AppBar
-        position={'static'} //? Revisar si conviene usar fixed
-        sx={{ height: '8vh',
-        justifyContent: "center" }}
+        position={"static"} //? Revisar si conviene usar fixed
+        sx={{ height: "8vh", justifyContent: "center" }}
       >
         <Toolbar>
-            <Typography
-              variant="h3"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              {user && user.name ? user.name : "Empresa"}
-            </Typography>
+          <Typography
+            variant="h3"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            {user && user.name ? user.name : "Empresa"}
+          </Typography>
 
-          
-            <Button onClick={() => setAsideActive(!asideActive)} sx={{
-              color: 'white'
-            }}>
-              <East sx={{ fontSize: 30 }} />
-            </Button>
+          <Button
+            onClick={() => setAsideActive(!asideActive)}
+            sx={{
+              color: "white",
+            }}
+          >
+            <East sx={{ fontSize: 30 }} />
+          </Button>
 
           <Box sx={{ flexGrow: 1 }} />
 
