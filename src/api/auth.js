@@ -3,7 +3,7 @@ import backendApi from "./config";
 const login = async ({ user, password }) => {
   try {
     const { data } = await backendApi.post("/auth/login", {
-      user,
+      name: user,
       password,
     });
     if (data) {
@@ -17,7 +17,7 @@ const login = async ({ user, password }) => {
   }
 };
 
-const createNewUser = async (payload) => {
+const register = async (payload) => {
   try {
     const { data } = await backendApi.post("/auth/register", payload);
     return data;
@@ -37,4 +37,4 @@ const getUserInfo = async () => {
   }
 };
 
-export { login, createNewUser, getUserInfo };
+export { login, register, getUserInfo };

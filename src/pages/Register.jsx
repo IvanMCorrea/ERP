@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
   IconButton,
   Paper,
@@ -11,23 +12,43 @@ import {
 import React, { useContext, useState } from "react";
 import { ColorModeContext } from "../theme/AppTheme";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { login } from "../api/auth";
+import { login, register } from "../api/auth";
 import { Link } from "react-router-dom";
 import routes from "../router/routes";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Register = () => {
+  const [form, setForm] = useState({
+    user: "",
+    email: "",
+    password: "",
+    description: "",
+    address: "",
+  });
+
   const theme = useContext(ColorModeContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await login(email, password);
+    if (!form.user || !form.email || !form.password) return false;
+    const res = await register(form);
     if (res.status) {
       alert("Logeado");
     } else {
       alert("error al iniciar sesión");
     }
   };
+
+  const updateForm = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const inputs = [
+    { name: "name", label: "Name", type: "text" },
+    { name: "email", label: "Email", type: "text" },
+    { name: "password", label: "Password", type: "password" },
+    { name: "description", label: "Description", type: "text" },
+    { name: "address", label: "Address", type: "text" },
+  ];
 
   return (
     <Grid
@@ -48,11 +69,13 @@ const Login = () => {
       <Grid
         item
         xs={11}
-        md={6}
-        lg={4}
+        md={8}
         sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Card component="article" sx={{ maxWidth: "500px", minHeight: 350 }}>
+        <Card
+          component="article"
+          sx={{ width: "100%", maxWidth: "1000px", minHeight: 800 }}
+        >
           <CardContent
             sx={{
               textAlign: "center",
@@ -62,32 +85,30 @@ const Login = () => {
             }}
           >
             <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-              Sign in
+              Register
             </Typography>
             <form onSubmit={handleSubmit}>
-              <Typography>Email</Typography>
-              <TextField
-                sx={{ my: 2, px: 5 }}
-                fullWidth
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Typography>Password</Typography>
-              <TextField
-                sx={{ my: 2, px: 5 }}
-                fullWidth
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              {inputs.map((item) => (
+                <FormControl fullWidth sx={{ px: 5 }}>
+                  <Typography sx={{ textAlign: "left" }}>
+                    {item.label}
+                  </Typography>
+                  <TextField
+                    sx={{ my: 2 }}
+                    fullWidth
+                    name={item.name}
+                    value={form[item.name]}
+                    onChange={(e) => updateForm(e)}
+                    type={item.type}
+                  />
+                </FormControl>
+              ))}
               <Button variant="contained" type="submit">
-                Login
+                Create account
               </Button>
             </form>
-            <Link to={routes.register} style={{ marginTop: 20 }}>
-              Create account
+            <Link to={routes.login} style={{ marginTop: 20 }}>
+              Already have an account? Sign in
             </Link>
           </CardContent>
         </Card>
@@ -96,4 +117,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
