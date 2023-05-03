@@ -1,21 +1,25 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Grid } from "@mui/material";
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import NavBar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 
 const Layout = () => {
-  return (
-   <Grid container>
-    <Grid item xs={12}>
-        {/* Nav */}
-    </Grid>
-    <Grid item xs={4}>
-        {/* Sidebar */}
-    </Grid>
-    <Grid item xs={8}>
-        <Outlet />
-    </Grid>
-   </Grid>
-  )
-}
+  const [asideActive, setAsideActive] = useState(false);
 
-export default Layout
+  return (
+    <Grid container>
+      <Grid item xs={12}>
+        <NavBar setAsideActive={setAsideActive} asideActive={asideActive} />
+      </Grid>
+      <Grid item xs={4}>
+        <Sidebar setAsideActive={setAsideActive} asideActive={asideActive} />
+      </Grid>
+      <Grid item xs={8}>
+        <Outlet />
+      </Grid>
+    </Grid>
+  );
+};
+
+export default Layout;
