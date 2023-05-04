@@ -12,20 +12,24 @@ import React, { useContext, useState } from "react";
 import { ColorModeContext } from "../theme/AppTheme";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { login } from "../api/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "../router/routes";
+import { useSnackbar } from "notistack";
 
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const theme = useContext(ColorModeContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await login(email, password);
     if (res.status) {
-      alert("Logeado");
+      enqueueSnackbar(res.msg, { variant: "success" });
+      navigate(routes.dashboard);
     } else {
-      alert("error al iniciar sesión");
+      enqueueSnackbar(res.msg, { variant: "error" });
     }
   };
 

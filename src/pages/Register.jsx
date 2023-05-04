@@ -5,20 +5,26 @@ import {
   FormControl,
   Grid,
   IconButton,
+  InputAdornment,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { ColorModeContext } from "../theme/AppTheme";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+  Brightness4,
+  Brightness7,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import { login, register } from "../api/auth";
 import { Link } from "react-router-dom";
 import routes from "../router/routes";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
-    user: "",
     email: "",
     password: "",
     description: "",
@@ -29,7 +35,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.user || !form.email || !form.password) return false;
+    console.log(form);
+    if (!form.name || !form.email || !form.password) return false;
     const res = await register(form);
     if (res.status) {
       alert("Logeado");
@@ -42,10 +49,16 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const inputs = [
     { name: "name", label: "Name", type: "text" },
     { name: "email", label: "Email", type: "text" },
-    { name: "password", label: "Password", type: "password" },
+    {
+      name: "password",
+      label: "Password",
+      type: showPassword ? "text" : "password",
+    },
     { name: "description", label: "Description", type: "text" },
     { name: "address", label: "Address", type: "text" },
   ];
@@ -89,7 +102,7 @@ const Register = () => {
             </Typography>
             <form onSubmit={handleSubmit}>
               {inputs.map((item) => (
-                <FormControl fullWidth sx={{ px: 5 }}>
+                <FormControl fullWidth sx={{ px: 5 }} key={item.name}>
                   <Typography sx={{ textAlign: "left" }}>
                     {item.label}
                   </Typography>
@@ -100,6 +113,24 @@ const Register = () => {
                     value={form[item.name]}
                     onChange={(e) => updateForm(e)}
                     type={item.type}
+                    InputProps={{
+                      endAdornment:
+                        item.type === "password" ? (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={handleClickShowPassword}
+                              edge="end"
+                              sx={{ color: "#323232" }}
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ) : null,
+                    }}
                   />
                 </FormControl>
               ))}
