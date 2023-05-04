@@ -18,13 +18,14 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import { login, register } from "../api/auth";
+import { register } from "../api/auth";
 import { Link } from "react-router-dom";
 import routes from "../router/routes";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
     description: "",
