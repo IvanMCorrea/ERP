@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,13 +14,15 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import routes from "../../router/routes";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { East } from "@mui/icons-material";
+import { Brightness4, Brightness7, East } from "@mui/icons-material";
+import { ColorModeContext } from "../../theme/AppTheme";
 
 const NavBar = ({ setAsideActive, asideActive }) => {
   const storageData = localStorage.getItem("USER_INFO");
   const user = JSON.parse(storageData);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const theme = useContext(ColorModeContext);
   const navigate = useNavigate();
 
   const myMenu = [
@@ -150,6 +152,11 @@ const NavBar = ({ setAsideActive, asideActive }) => {
             {user && user.name ? user.name : "Empresa"}
           </Typography>
 
+          
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <Button
             onClick={() => setAsideActive(!asideActive)}
             sx={{
@@ -158,28 +165,13 @@ const NavBar = ({ setAsideActive, asideActive }) => {
           >
             <East sx={{ fontSize: 30 }} />
           </Button>
-
-          <Box sx={{ flexGrow: 1 }} />
-
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={0} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={0} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+          <IconButton
+            size="large"
+            onClick={theme.toggleColorMode}
+            color="inherit"
+          >
+            {theme.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
             <IconButton
               size="large"
               edge="end"

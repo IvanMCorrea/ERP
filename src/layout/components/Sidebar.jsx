@@ -7,12 +7,12 @@ const Sidebar = ({ responsive, asideActive }) => {
   const navigate = useNavigate();
   const [nav, setNav] = useState([]);
   const info = JSON.parse(localStorage.getItem("USER_INFO"));
-
+  const role = JSON.parse(localStorage.getItem("ROLE"));
   useEffect(() => {
     if (!info) {
       navigate(routes.login);
     } else {
-      if (info.role[0] === 0) {
+      if (role === 0) {
         setNav([
           {
             id: 1,
@@ -33,7 +33,7 @@ const Sidebar = ({ responsive, asideActive }) => {
             options: [{ name: "Clients", id: 31, link: "#" }],
           },
         ]);
-      } else if (info.role[0] === 1) {
+      } else if (role === 1) {
         setNav([
           {
             id: 10,
@@ -53,10 +53,9 @@ const Sidebar = ({ responsive, asideActive }) => {
       container
       className="drawer"
       sx={{
-        position: "fixed",
+        position: "relative",
         width: responsive ? "100vw" : "20vw",
-        height: "100vh",
-        zIndex: 1100,
+        height: "92vh",
         opacity: 1,
         top: 0,
         left: asideActive ? 0 : "-100vw",
