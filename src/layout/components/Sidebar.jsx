@@ -60,12 +60,13 @@ const Sidebar = ({ responsive, asideActive }) => {
         top: 0,
         left: asideActive ? 0 : "-30vw",
         transition: "left 0.5s ease-in-out",
+        backgroundColor: "sidebar"
       }}
     >
       <Grid item xs={12} >
       {nav &&
         nav.map((item) => (
-          <Accordion key={item.id} disableGutters>
+          <Accordion key={item.id} sx={{backgroundColor: "sidebar"}} disableGutters>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon/>}
             >

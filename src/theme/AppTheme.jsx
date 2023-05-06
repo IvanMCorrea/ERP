@@ -30,9 +30,14 @@ export default function AppTheme() {
               primary: "#111111",
               secondary: "#fff",
             },
+            sidebar: "#f5f5f5",
           }
         : {
+            primary: {
+              main: "#1D438A"
+            },
             card: "#121212",
+            sidebar: "#252525",
             text: {
               primary: "#fff",
               secondary: "#fff",
