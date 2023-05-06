@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Accordion, AccordionSummary, Grid, AccordionDetails, Button, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "../../router/routes";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Sidebar = ({ responsive, asideActive }) => {
   const navigate = useNavigate();
@@ -58,11 +59,40 @@ const Sidebar = ({ responsive, asideActive }) => {
         opacity: 1,
         top: 0,
         left: asideActive ? 0 : "-30vw",
-        backgroundColor: "primary.main",
         transition: "left 0.5s ease-in-out",
       }}
     >
-      <Grid item xs={12} sx={{ margin: 1 }}></Grid>
+      <Grid item xs={12} >
+      {nav &&
+        nav.map((item) => (
+          <Accordion key={item.id} disableGutters>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon/>}
+            >
+              <Typography>{item.name}</Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={{ p: 0 }}>
+              {item.options &&
+                item.options.map((option) => (
+                  <Button
+                    component={Link}
+                    to={option.link}
+                    key={option.id}
+                    variant="contained"
+                    sx={{
+                      py: 2,
+                      borderBottom: "1px solid #222222",
+                      textAlign: "center",
+                    }}
+                    fullWidth
+                  >
+                    {option.name}
+                  </Button>
+                ))}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Grid>
     </Grid>
   );
 };
