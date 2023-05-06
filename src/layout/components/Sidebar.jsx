@@ -53,12 +53,12 @@ const Sidebar = ({ responsive, asideActive }) => {
     <Grid
       container
       sx={{
-        position: "relative",
+        position: responsive ? "absolute" : "relative",
         width: responsive ? "100vw" : "100%",
         height: asideActive ? "92vh" : 0,
         opacity: 1,
-        top: 0,
-        left: asideActive ? 0 : "-30vw",
+        top: responsive ? "8vh" : 0,
+        left: asideActive ? 0 : "-100vw",
         transition: "left 0.5s ease-in-out",
         backgroundColor: "sidebar"
       }}

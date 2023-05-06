@@ -4,24 +4,21 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import routes from "../../router/routes";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
-import { Brightness4, Brightness7, East } from "@mui/icons-material";
+import { Brightness4, Brightness7, East, West } from "@mui/icons-material";
 import { ColorModeContext } from "../../theme/AppTheme";
+import { Tooltip } from "@mui/material";
 
 const NavBar = ({ setAsideActive, asideActive }) => {
-  const storageData = localStorage.getItem("USER_INFO");
-  const user = JSON.parse(storageData);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const storageData = localStorage.getItem("USER_INFO");
+  const user = JSON.parse(storageData);
   const theme = useContext(ColorModeContext);
   const navigate = useNavigate();
 
@@ -119,10 +116,21 @@ const NavBar = ({ setAsideActive, asideActive }) => {
   return (
     <Box sx={{ flexGrow: 1, height: "100%" }}>
       <AppBar
-        position={"static"} //? Revisar si conviene usar fixed
+        position={"static"}
         sx={{ height: "8vh", justifyContent: "center" }}
       >
         <Toolbar>
+          <Tooltip placement="bottom" title={asideActive ? "Close menu" : "Open menu"}>
+            <IconButton
+              onClick={() => setAsideActive(!asideActive)}
+              sx={{
+                color: "white",
+                mr: 5
+              }}
+            >
+              {asideActive ? <West sx={{ fontSize: 30 }}  /> : <East sx={{ fontSize: 30 }}  />}
+            </IconButton>
+          </Tooltip>
           <Typography
             variant="h3"
             noWrap
@@ -137,32 +145,28 @@ const NavBar = ({ setAsideActive, asideActive }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <Button
-            onClick={() => setAsideActive(!asideActive)}
-            sx={{
-              color: "white",
-            }}
-          >
-            <East sx={{ fontSize: 30 }} />
-          </Button>
-          <IconButton
-            size="large"
-            onClick={theme.toggleColorMode}
-            color="inherit"
-          >
-            {theme.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
-          </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <Tooltip placement="bottom" title={theme.mode === "dark" ? "Light mode" : "Dark Mode"}>
+              <IconButton
+                size="large"
+                onClick={theme.toggleColorMode}
+                color="inherit"
+              >
+                {theme.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+              </IconButton>
+            </Tooltip>
+            <Tooltip placement="bottom" title="Profile menu">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Tooltip>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
