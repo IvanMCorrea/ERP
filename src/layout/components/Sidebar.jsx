@@ -46,21 +46,20 @@ const Sidebar = ({ responsive, asideActive }) => {
         ]);
       }
     }
-  }, [info]);
+  }, []);
 
   return (
     <Grid
       container
-      className="drawer"
       sx={{
         position: "relative",
-        width: responsive ? "100vw" : "20vw",
-        height: "92vh",
+        width: responsive ? "100vw" : "100%",
+        height: asideActive ? "92vh" : 0,
         opacity: 1,
         top: 0,
-        left: asideActive ? 0 : "-100vw",
+        left: asideActive ? 0 : "-30vw",
         backgroundColor: "primary.main",
-        transition: "all 0.5s ease-in-out",
+        transition: "left 0.5s ease-in-out",
       }}
     >
       <Grid item xs={12} sx={{ margin: 1 }}></Grid>
