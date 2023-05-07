@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Button,
   Paper,
@@ -14,14 +14,11 @@ import {
   FormControl,
   InputAdornment,
   OutlinedInput,
-  Box,
   Typography,
   Toolbar,
   Divider,
-  TableSortLabel,
   Grid,
 } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 import Pagination from "./Pagination";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
@@ -43,8 +40,6 @@ const EmployeesTable = ({
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [showFilters, setShowFilters] = useState(false);
-  const [sortBy, setSortBy] = useState("name");
-  const [order, setOrder] = useState("asc");
   const [values, setValues] = useState({ ...filters });
 
   useEffect(() => {
@@ -66,13 +61,8 @@ const EmployeesTable = ({
   };
   const handleClearFilters = () => {
     setValues({ keyword: "" });
-    setKeyword("");
+    setFilters({ ...filters, keyword: "" });
     setPage(1);
-  };
-  const handleRequestSort = (property) => {
-    const isAsc = sortBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc"); // Si el orden es ascendente, se establece descendente y viceversa
-    setSortBy(property);
   };
 
   const handleDelete = async (data) => {
@@ -173,72 +163,11 @@ const EmployeesTable = ({
           )}
           <Divider />
           <Table sx={{ minWidth: 500, mb: 2 }}>
-            <TableHead>
+            <TableHead sx={{ bgcolor: "primary.main", color: "white" }}>
               <TableRow>
-                <TableCell key="name">
-                  <TableSortLabel
-                    active={sortBy === "name"}
-                    direction={order === "asc" ? order : "desc"}
-                    onClick={() => handleRequestSort("name")}
-                  >
-                    Nombre
-                    {sortBy === "name" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortBy === "email"}
-                    direction={order === "asc" ? order : "desc"}
-                    onClick={() => handleRequestSort("email")}
-                  >
-                    Email
-                    {sortBy === "email" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortBy === "type"}
-                    direction={order === "asc" ? order : "desc"}
-                    onClick={() => handleRequestSort("type")}
-                  >
-                    Tipo de prospecto
-                    {sortBy === "type" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={sortBy === "createdAt"}
-                    direction={order === "asc" ? order : "desc"}
-                    onClick={() => handleRequestSort("createdAt")}
-                  >
-                    Fecha de Creación
-                    {sortBy === "createdAt" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
+                <TableCell key="name">Nombre</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Fecha de Creación</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
@@ -253,13 +182,12 @@ const EmployeesTable = ({
                         {row.name ? row.name : "N/A"}
                       </TableCell>
                       <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.typeLabel}</TableCell>
                       <TableCell>{formatDate(row.created_at)}</TableCell>
                       <TableCell>
                         <Grid container spacing={2}>
                           <Grid item xs={12} md={6}>
                             <Link to={`${routes.employees_list}/${row._id}`}>
-                              <Tooltip title="Ver prospecto" placement="top">
+                              <Tooltip title="Ver detalle" placement="top">
                                 <Button
                                   variant="contained"
                                   sx={{ minWidth: "40px", px: 0 }}

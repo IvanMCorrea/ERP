@@ -13,7 +13,7 @@ const Employees = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getData = async () => {
-    const res = await getEmployeesByPage(page, filters);
+    const res = await getEmployeesByPage(newPage, filters);
     setEmployees(res.data);
     setEmployeesPages(res.totalPages);
   };

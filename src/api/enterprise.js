@@ -15,7 +15,7 @@ const inviteEmployee = async (payload) => {
 
 const getEmployeesByPage = async (page, payload) => {
   try {
-    const { data } = await backendApi.get(
+    const { data } = await backendApi.post(
       `/enterprise/getEmployeesPage/${page}`,
       {
         params: { ...payload },

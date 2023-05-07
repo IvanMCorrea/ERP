@@ -25,6 +25,9 @@ export default function AppTheme() {
       mode,
       ...(mode === "light"
         ? {
+            secondary: {
+              main: "#07CBBE",
+            },
             card: "#121212",
             text: {
               primary: "#111111",
@@ -34,7 +37,10 @@ export default function AppTheme() {
           }
         : {
             primary: {
-              main: "#1D438A"
+              main: "#1D438A",
+            },
+            secondary: {
+              main: "#007A78",
             },
             card: "#121212",
             sidebar: "#252525",
