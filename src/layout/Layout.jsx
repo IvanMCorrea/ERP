@@ -34,10 +34,14 @@ const Layout = () => {
       <Grid item xs={12}>
         <NavBar setAsideActive={setAsideActive} asideActive={asideActive} />
       </Grid>
-      <Grid item xs={ asideActive ? 3 : 0}>
-        <Sidebar setAsideActive={setAsideActive} asideActive={asideActive} responsive={responsive} />
+      <Grid item xs={asideActive ? 3 : 0}>
+        <Sidebar
+          setAsideActive={setAsideActive}
+          asideActive={asideActive}
+          responsive={responsive}
+        />
       </Grid>
-      <Grid item xs={asideActive ? 9 : 12} sx={{minHeight: "92vh",}}>
+      <Grid item xs={asideActive ? 9 : 12} sx={{ minHeight: "92vh", p: 5 }}>
         <Outlet />
       </Grid>
     </Grid>

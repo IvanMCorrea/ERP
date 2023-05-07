@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, AccordionSummary, Grid, AccordionDetails, Button, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  Grid,
+  AccordionDetails,
+  Button,
+  Typography,
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import routes from "../../router/routes";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -25,8 +32,8 @@ const Sidebar = ({ responsive, asideActive }) => {
           },
           {
             id: 2,
-            name: "Users",
-            options: [{ name: "Users", id: 21, link: "#" }],
+            name: "Employees",
+            options: [{ name: "Employees", id: 21, link: routes.employees }],
           },
           {
             id: 3,
@@ -60,39 +67,41 @@ const Sidebar = ({ responsive, asideActive }) => {
         top: responsive ? "8vh" : 0,
         left: asideActive ? 0 : "-100vw",
         transition: "left 0.5s ease-in-out",
-        backgroundColor: "sidebar"
+        backgroundColor: "sidebar",
       }}
     >
-      <Grid item xs={12} >
-      {nav &&
-        nav.map((item) => (
-          <Accordion key={item.id} sx={{backgroundColor: "sidebar"}} disableGutters>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon/>}
+      <Grid item xs={12}>
+        {nav &&
+          nav.map((item) => (
+            <Accordion
+              key={item.id}
+              sx={{ backgroundColor: "sidebar" }}
+              disableGutters
             >
-              <Typography>{item.name}</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ p: 0 }}>
-              {item.options &&
-                item.options.map((option) => (
-                  <Button
-                    component={Link}
-                    to={option.link}
-                    key={option.id}
-                    variant="contained"
-                    sx={{
-                      py: 2,
-                      borderBottom: "1px solid #222222",
-                      textAlign: "center",
-                    }}
-                    fullWidth
-                  >
-                    {option.name}
-                  </Button>
-                ))}
-            </AccordionDetails>
-          </Accordion>
-        ))}
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{item.name}</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ p: 0 }}>
+                {item.options &&
+                  item.options.map((option) => (
+                    <Button
+                      component={Link}
+                      to={option.link}
+                      key={option.id}
+                      variant="contained"
+                      sx={{
+                        py: 2,
+                        borderBottom: "1px solid #222222",
+                        textAlign: "center",
+                      }}
+                      fullWidth
+                    >
+                      {option.name}
+                    </Button>
+                  ))}
+              </AccordionDetails>
+            </Accordion>
+          ))}
       </Grid>
     </Grid>
   );

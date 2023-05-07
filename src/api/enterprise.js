@@ -13,4 +13,19 @@ const inviteEmployee = async (payload) => {
   }
 };
 
-export { inviteEmployee };
+const getEmployeesByPage = async (page, payload) => {
+  try {
+    const { data } = await backendApi.get(
+      `/enterprise/getEmployeesPage/${page}`,
+      {
+        params: { ...payload },
+      }
+    );
+    return data;
+  } catch (error) {
+    const res = error.response.data;
+    return res;
+  }
+};
+
+export { inviteEmployee, getEmployeesByPage };

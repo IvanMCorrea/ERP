@@ -3,8 +3,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "./routes";
 import Login from "../pages/Login";
 import Layout from "../layout/Layout";
-import Home from "../pages/Home";
+import Home from "../pages/enterprise/Home";
 import Register from "../pages/Register";
+import Employees from "../pages/enterprise/employees/Employees";
 
 const AppRouter = () => {
   return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
       <Route exact path={routes.register} element={<Register />} />
       <Route element={<Layout />}>
         <Route exact path={routes.dashboard} element={<Home />} />
+        <Route exact path={routes.employees} element={<Employees />} />
       </Route>
       <Route path={"/*"} element={<Navigate to={routes.login} />} />
     </Routes>
